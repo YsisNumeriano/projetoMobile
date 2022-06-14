@@ -2,9 +2,13 @@ import * as React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 export interface HomeScreenProps {
+    navigation: any;
 }
 
-export function HomeScreen (props: HomeScreenProps) {
+export function HomeScreen ({ navigation }: HomeScreenProps) {
+    const handleLogin = () => {
+        navigation.navigate('Login');
+    }
     return (
         <View style={styles.container}>
             
@@ -14,7 +18,7 @@ export function HomeScreen (props: HomeScreenProps) {
 
             <TouchableOpacity
             style={styles.botao}
-            onPress={() => {this.clicou()}}
+            onPress={handleLogin}
             >
             <Text style={styles.botaoText}>Login</Text>
             </TouchableOpacity>
@@ -35,14 +39,9 @@ const styles = StyleSheet.create({
     borderRadius: 100
     },
     botaoText: {
-        marginTop: 10,
-        padding: 10,
-        width: 300,
-        color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
-        borderRadius: 3,
-        textAlign: 'center'
+        fontWeight: "bold",
+        textAlign: "center",
     },
     botao: {
         width: 300,

@@ -2,9 +2,13 @@ import * as React from 'react';
 import { Alert, View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
 
 export interface LoginScreenProps {
+    navigation: any;
 }
 
-export function LoginScreen (props: LoginScreenProps) {
+export function LoginScreen ({ navigation }: LoginScreenProps) {
+    const handleLogin = () => {
+        navigation.navigate('ScheduleService');
+    }
 
     return (
       <View style={styles.container}>
@@ -19,11 +23,12 @@ export function LoginScreen (props: LoginScreenProps) {
         <TextInput
             style={styles.input}
             placeholder="Senha"
+            secureTextEntry={true}
         />     
         <TouchableOpacity
             style={styles.botao}
-            onPress={() => {this.clicou()}}
-            >
+            onPress={handleLogin}
+        >
             <Text style={styles.botaoText}>Login</Text>
             </TouchableOpacity>
       </View>
@@ -42,7 +47,8 @@ const styles = StyleSheet.create({
         width: 150,
         height: 150,
         borderRadius: 100
-        },
+    },
+    
     input: {
         marginTop: 10,
         padding: 10,
@@ -56,13 +62,9 @@ const styles = StyleSheet.create({
     
 
     botaoText: {
-        marginTop: 10,
-        padding: 10,
-        width: 300,        
         fontSize: 16,
-        fontWeight: 'bold',
-        borderRadius: 3,
-        textAlign: 'center'
+        fontWeight: "bold",
+        textAlign: "center",
     },
     botao: {
         width: 300,

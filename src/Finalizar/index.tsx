@@ -3,42 +3,62 @@ import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'reac
 import { MaterialIcons } from '@expo/vector-icons';
 
 export interface EscolherServicoScreenProps {
+    navigation: any;
+    route: any;
 }
 
-export function EscolherServicoScreen (props: EscolherServicoScreenProps) {
+export function EscolherServicoScreen ({
+    navigation,
+    route
+}: EscolherServicoScreenProps) {
+    const { image } = route.params;
+        
+    const handleBack = () => {
+        navigation.navigate({
+            name: "ScheduleService",
+        });
+    };
+
+    const handleFinish = () => {
+        navigation.navigate({
+            name: "Login",
+        });
+    };
+
     return (
         <View style={styles.container}>
             <Image
                 source={require('../../assets/icone.png')}
                 style={styles.logo}/>
-             
-              
-  
+
+            <View>
+                { image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} /> }
+            </View>
   
             <View style={{flexDirection: 'column', justifyContent: 'space-around'}}>
                 <View>
                     <TouchableOpacity
-                    style={styles.botao}
-                    onPress={() => {this.clicou()}}
-            >
-                    <Text style={styles.botaoText}>Recomeçar Cronograma</Text>
+                        style={styles.botao}
+                        onPress={handleBack}
+                    >
+                        <Text style={styles.botaoText}>Recomeçar Cronograma</Text>
                     </TouchableOpacity>
                       
                 </View>
   
                 <View>
-                  <TouchableOpacity
-                    style={styles.botao}
-                    onPress={() => {this.clicou()}}
+                    <TouchableOpacity
+                        style={styles.botao}
+                        onPress={handleFinish}
                     >
-                <Text style={styles.botaoText}>Finalizar</Text>
-                </TouchableOpacity>
+                        <Text style={styles.botaoText}>Finalizar</Text>
+                    </TouchableOpacity>
                       
                 </View>
             </View>
         </View>
-      );
-  }
+    );
+}
   
   const styles = StyleSheet.create({
         container: {
@@ -57,13 +77,9 @@ export function EscolherServicoScreen (props: EscolherServicoScreenProps) {
           
     },
     botaoText: {
-        marginTop: 10,
-        padding: 10,
-        width: 300,        
         fontSize: 16,
-        fontWeight: 'bold',
-        borderRadius: 3,
-        textAlign: 'center'
+        fontWeight: "bold",
+        textAlign: "center",
     },
     botao: {
         width: 300,
