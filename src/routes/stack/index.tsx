@@ -4,6 +4,7 @@ import { LoginScreen } from "../../Login";
 import { AgendarServicoScreen } from "../../AgendarServico";
 import { EscolherServicoScreen } from "../../Finalizar";
 import { HistoricoCapilar } from "../../HistoricoCapilar";
+import { SignUpScreen } from "../../Cadastro";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ export default function MainStackNav() {
         <Stack.Screen name="ScheduleService" component={AgendarServicoScreen} />
         <Stack.Screen name="HairHistory" component={HistoricoCapilar} />
         <Stack.Screen name="FinishService" component={EscolherServicoScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
       </Stack.Navigator>
     );
   }

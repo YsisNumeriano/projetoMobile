@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
+import UserService from "../api/services/UserService";
+
 export interface HistoricoCapilarProps {
   navigation: any;
   route: any;
@@ -27,7 +29,8 @@ const Item = ({ name, step }) => (
 );
 
 export function HistoricoCapilar({ navigation, route }: HistoricoCapilarProps) {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -36,18 +39,23 @@ export function HistoricoCapilar({ navigation, route }: HistoricoCapilarProps) {
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      setImage(result.uri);
-    }
+    console.log(result)
+
+    // if (result.cancelled === false) {
+    //   setImage(result.uri);
+    // }
   };
 
   const renderItem = ({ item }) => <Item name={item.name} step={item.step} />;
 
   const handleFinish = () => {
-    navigation.navigate({
-      name: "FinishService",
-      params: { image },
-    });
+    UserService.saveHairSchedule(route.params.historico)
+    .then(() => {
+      navigation.navigate({
+        name: "FinishService",
+        params: { image },
+      });
+    })
   };
 
   return (

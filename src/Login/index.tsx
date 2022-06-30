@@ -1,13 +1,25 @@
 import * as React from 'react';
-import { Alert, View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import { Alert, View, Text, StyleSheet, TextInput, Image, TouchableOpacity, ToastAndroid } from 'react-native';
+import UserService from '../api/services/UserService';
 
 export interface LoginScreenProps {
     navigation: any;
 }
 
 export function LoginScreen ({ navigation }: LoginScreenProps) {
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
     const handleLogin = () => {
-        navigation.navigate('ScheduleService');
+        if (email.length && password.length) {
+            UserService.login({ email, password })
+                .then(() => {
+                    navigation.navigate('ScheduleService');
+                })
+                .catch((error) => Alert.alert(error));
+        } else {
+            ToastAndroid.show("Você possui algum campo inválido", ToastAndroid.LONG);
+        }
     }
 
     return (
@@ -19,12 +31,21 @@ export function LoginScreen ({ navigation }: LoginScreenProps) {
         <TextInput
             style={styles.input}
             placeholder="Email"
+            onChangeText={e => { setEmail(e) }}
+            defaultValue={email}
         />
         <TextInput
             style={styles.input}
             placeholder="Senha"
             secureTextEntry={true}
+            onChangeText={e => setPassword(e)}
         />     
+        <TouchableOpacity
+            onPress={() => navigation.navigate("SignUp")}
+            style={styles.botao}
+        >
+            <Text style={styles.botaoText}>Criar conta</Text>
+        </TouchableOpacity>
         <TouchableOpacity
             style={styles.botao}
             onPress={handleLogin}
@@ -76,5 +97,5 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         alignItems: 'center',
         justifyContent:'center'
-    }
+    },
 });
